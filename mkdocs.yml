@@ -1,0 +1,44 @@
+site_name: Uriya Harpeness' Miscellaneous Things
+repo_url: https://github.com/UriyaHarpeness/misc
+repo_name: misc
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      toggle:
+        icon: material/eye
+        name: Switch to light mode
+      primary: black
+    - scheme: dracula
+      toggle:
+        icon: material/eye-outline
+        name: Switch to dark mode
+      primary: teal
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+  features:
+    - navigation.indexes
+    - navigation.tabs
+    - navigation.top
+    - navigation.instant
+    - navigation.sections
+    - content.code.copy
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - meta
+  - admonition
+  - footnotes
+  - pymdownx.highlight:
+      linenums: true
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+plugins:
+  - search
