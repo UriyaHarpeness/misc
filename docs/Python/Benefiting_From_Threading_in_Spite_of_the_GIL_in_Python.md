@@ -13,7 +13,7 @@ very recently I finally took initiative to get to the bottom of.
 ## The Scope
 
 The most wide-spread implementation of Python is CPython (written in C, duh), it's open-source, and here's the repo:
-[python/cpython](https://github.com/python/cpython).
+[python/cpython](https://github.com/python/cpython). That's where my research took place.
 
 Note that currently Python 3.13 is underway (this document is written over CPython with
 the [commit SHA of 557b05c](https://github.com/python/cpython/tree/557b05c7a5334de5da3dc94c108c0121f10b9191)), and for
@@ -152,19 +152,22 @@ the process I went through to look for an answer.
 I wanted to make sure I was right, and wanted to see another example of it in a different context where it makes sense,
 and so I searched for these macros in CPython, and found them being used in `Modules/socketmodule.c` inside the function
 [`sock_call_ex`](https://github.com/python/cpython/tree/557b05c7a5334de5da3dc94c108c0121f10b9191/Modules/socketmodule.c#L972)
-(which after some looking at the code seemed to be called with many socket operations: `accept`, `connect`, `send`,
-`recv`, and more).
+(_call ex, hehe..._), which after some looking at the code seemed to be called with many socket related syscalls:
+[`accept`](https://man7.org/linux/man-pages/man2/accept.2.html),
+[`connect`](https://man7.org/linux/man-pages/man2/connect.2.html),
+[`send`](https://man7.org/linux/man-pages/man2/send.2.html),
+[`recv`](https://man7.org/linux/man-pages/man2/recv.2.html), and more.
 
 This was indeed reassuring of the theory above, and I concluded my research happily.
 
-## Myth-Busting :ghost:
+## Myth-Busting :material-ghost-off:
 
 Calling C code (or any other language) from Python does not guarantee concurrency, as written in Python's code about the
 GIL: _"The mechanism used by the CPython interpreter to assure that only one thread executes Python bytecode at a
 time"_.
 
-The purpose is to protect Python data from being modified by several threads concurrently, meaning that the
-release of the GIL needs to be explicit, and of course, with much caution.
+The purpose is to protect Python data from being modified by several threads simultaneously, meaning that the release of
+the GIL needs to be explicit, and of course, with much caution.
 
 ## Bonus
 
