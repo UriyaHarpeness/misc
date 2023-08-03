@@ -1,0 +1,4 @@
+mdutils
+mkdocs
+mkdocs-material
+pymdown-extensions
